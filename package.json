@@ -1,0 +1,37 @@
+{
+  "name": "pg-magic",
+  "version": "1.0.0",
+  "description": "Generate TypeScript types from PostgreSQL queries",
+  "author": "Daniel Rearden <danielrearden@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "pg",
+    "postgres",
+    "postgresql",
+    "sql",
+    "ts",
+    "type",
+    "typescript"
+  ],
+  "scripts": {
+    "prepublishOnly": "rimraf dist && tsc",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@types/pg": "^8.6.2",
+    "jest": "^27.4.5",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.2",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "pg": "^8.7.1",
+    "pgsql-parser": "^13.1.11",
+    "prettier": "^2.5.1"
+  }
+}
