@@ -49,7 +49,7 @@ describe("generate", () => {
     expect(
       await generateOne(`
         SELECT
-          'abc'::citext a,
+          'abc'::text a,
           cast(42 AS bigint) b
       `)
     ).toMatchInlineSnapshot(`"{ a: \\"abc\\"; b: 42 };"`);
@@ -133,7 +133,7 @@ describe("generate", () => {
       await generateOne(`
         SELECT
           1 + 2 a,
-          '12-30-21' - 1 b,
+          '12-30-21'::date - 1 b,
           1 / 2 c,
           'a' || 'b' || 'c' d,
           1 = 2 e
