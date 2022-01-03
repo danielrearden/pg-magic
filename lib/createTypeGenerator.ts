@@ -1507,7 +1507,10 @@ const format = (
   // Prettier expects valid TypeScript, but we want to explicitly return just type structure, so
   // we append a type name and then remove it after formatting is applied.
   const formatted = prettierFormat("type T = " + source, options);
-  return formatted.replace(/^type T\s*=\s*/, "").trim();
+  return formatted
+    .replace(/^type T\s*=\s*/, "")
+    .trim()
+    .slice(0, -1);
 };
 
 export const getTablesBySchema = async (

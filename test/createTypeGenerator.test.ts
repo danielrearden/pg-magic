@@ -42,7 +42,7 @@ describe("createTypeGenerator", () => {
         d: 42;
         e: 4.2;
         f: \\"Lorem ipsum dolor sit amet\\";
-      };"
+      }"
     `);
   });
 
@@ -53,7 +53,7 @@ describe("createTypeGenerator", () => {
           'abc'::text a,
           cast(42 AS bigint) b
       `)
-    ).toMatchInlineSnapshot(`"{ a: \\"abc\\"; b: 42 };"`);
+    ).toMatchInlineSnapshot(`"{ a: \\"abc\\"; b: 42 }"`);
   });
 
   test("case expression", async () => {
@@ -89,7 +89,7 @@ describe("createTypeGenerator", () => {
         b: 100 | 90 | 80 | 70;
         c: 100 | 90 | 80 | null;
         d: 100 | 90 | 80 | 70;
-      };"
+      }"
     `);
   });
 
@@ -103,7 +103,7 @@ describe("createTypeGenerator", () => {
           ((true AND false) OR true) d
       `)
     ).toMatchInlineSnapshot(
-      `"{ a: boolean; b: boolean; c: boolean; d: boolean };"`
+      `"{ a: boolean; b: boolean; c: boolean; d: boolean }"`
     );
   });
 
@@ -112,7 +112,7 @@ describe("createTypeGenerator", () => {
       await generateOne(`
         SELECT $1 a
       `)
-    ).toMatchInlineSnapshot(`"{ a: any | null };"`);
+    ).toMatchInlineSnapshot(`"{ a: any | null }"`);
   });
 
   test("coalesce", async () => {
@@ -125,7 +125,7 @@ describe("createTypeGenerator", () => {
         FROM address
       `)
     ).toMatchInlineSnapshot(
-      `"{ a: string; b: string | null; c: string | \\"x\\" };"`
+      `"{ a: string; b: string | null; c: string | \\"x\\" }"`
     );
   });
 
@@ -140,7 +140,7 @@ describe("createTypeGenerator", () => {
           1 = 2 e
       `)
     ).toMatchInlineSnapshot(
-      `"{ a: number; b: string; c: number; d: string; e: boolean };"`
+      `"{ a: number; b: string; c: number; d: string; e: boolean }"`
     );
   });
 
@@ -167,7 +167,7 @@ describe("createTypeGenerator", () => {
         f: string;
         g: string;
         h: number;
-      };"
+      }"
     `);
   });
 
@@ -189,7 +189,7 @@ describe("createTypeGenerator", () => {
         c: number | null;
         d: number | null;
         e: number | null;
-      };"
+      }"
     `);
   });
 
@@ -201,7 +201,7 @@ describe("createTypeGenerator", () => {
           percent_rank() OVER () b
         FROM film
       `)
-    ).toMatchInlineSnapshot(`"{ a: number; b: number };"`);
+    ).toMatchInlineSnapshot(`"{ a: number; b: number }"`);
   });
 
   test("other expressions", async () => {
@@ -241,7 +241,7 @@ describe("createTypeGenerator", () => {
         o: 0 | null;
         p: number;
         q: number;
-      };"
+      }"
     `);
   });
 
@@ -255,7 +255,7 @@ describe("createTypeGenerator", () => {
         FROM address
       `)
     ).toMatchInlineSnapshot(
-      `"{ address_id: number; address: string; address2: string | null };"`
+      `"{ address_id: number; address: string; address2: string | null }"`
     );
   });
 
@@ -283,7 +283,7 @@ describe("createTypeGenerator", () => {
         city: string;
         country: string;
         sid: number;
-      };"
+      }"
     `);
   });
 
@@ -313,7 +313,7 @@ describe("createTypeGenerator", () => {
         district: string | null;
         postal_code: string | null;
         phone: string | null;
-      };"
+      }"
     `);
   });
 
@@ -337,7 +337,7 @@ describe("createTypeGenerator", () => {
         first_name: string;
         last_name: string;
         email: string | null;
-      };"
+      }"
     `);
   });
 
@@ -351,7 +351,7 @@ describe("createTypeGenerator", () => {
         FROM address a1
       `)
     ).toMatchInlineSnapshot(
-      `"{ id: number; addr: string; addr2: string | null };"`
+      `"{ id: number; addr: string; addr2: string | null }"`
     );
   });
 
@@ -374,7 +374,7 @@ describe("createTypeGenerator", () => {
         email: string | null;
         address: string;
         address2: string | null;
-      };"
+      }"
     `);
   });
 
@@ -397,7 +397,7 @@ describe("createTypeGenerator", () => {
         email: string | null;
         address: string | null;
         address2: string | null;
-      };"
+      }"
     `);
   });
 
@@ -420,7 +420,7 @@ describe("createTypeGenerator", () => {
         email: string | null;
         address: string;
         address2: string | null;
-      };"
+      }"
     `);
   });
 
@@ -443,7 +443,7 @@ describe("createTypeGenerator", () => {
         email: string | null;
         address: string | null;
         address2: string | null;
-      };"
+      }"
     `);
   });
 
@@ -465,7 +465,7 @@ describe("createTypeGenerator", () => {
         email: string | null;
         address: string;
         address2: string | null;
-      };"
+      }"
     `);
   });
 
@@ -484,7 +484,7 @@ describe("createTypeGenerator", () => {
         FROM person p
       `)
     ).toMatchInlineSnapshot(
-      `"{ first_name: string; last_name: string; email: string | null };"`
+      `"{ first_name: string; last_name: string; email: string | null }"`
     );
   });
 
@@ -498,7 +498,7 @@ describe("createTypeGenerator", () => {
           (SELECT customer_id FROM customer LIMIT 1) d
       `)
     ).toMatchInlineSnapshot(
-      `"{ a: boolean | null; b: boolean | null; c: boolean; d: number | null };"`
+      `"{ a: boolean | null; b: boolean | null; c: boolean; d: number | null }"`
     );
   });
 
@@ -520,7 +520,7 @@ describe("createTypeGenerator", () => {
     ).toMatchInlineSnapshot(`
       "| { kind: \\"a\\"; count: 42 }
         | { kind: \\"b\\"; count: number | null }
-        | { kind: \\"c\\"; count: 99 };"
+        | { kind: \\"c\\"; count: 99 }"
     `);
   });
 
@@ -533,7 +533,7 @@ describe("createTypeGenerator", () => {
       "{
         column1: \\"foo\\" | \\"bar\\" | string | null;
         column2: 1 | 2 | number | null;
-      };"
+      }"
     `);
   });
 
@@ -545,7 +545,7 @@ describe("createTypeGenerator", () => {
         RETURNING c.*
       `)
     ).toMatchInlineSnapshot(
-      `"{ country_id: number; last_update: string; country: string };"`
+      `"{ country_id: number; last_update: string; country: string }"`
     );
   });
 
@@ -556,7 +556,7 @@ describe("createTypeGenerator", () => {
         SET country = 'nowhere'
         RETURNING country_id updated_id
       `)
-    ).toMatchInlineSnapshot(`"{ updated_id: number };"`);
+    ).toMatchInlineSnapshot(`"{ updated_id: number }"`);
   });
 
   test("delete statement", async () => {
@@ -566,7 +566,7 @@ describe("createTypeGenerator", () => {
         RETURNING *
       `)
     ).toMatchInlineSnapshot(
-      `"{ country_id: number; last_update: string; country: string };"`
+      `"{ country_id: number; last_update: string; country: string }"`
     );
   });
 
@@ -582,7 +582,7 @@ describe("createTypeGenerator", () => {
       "{
         rating: \\"G\\" | \\"PG\\" | \\"PG-13\\" | \\"R\\" | \\"NC-17\\" | null;
         rating2: \\"G\\" | \\"PG\\" | \\"PG-13\\" | \\"R\\" | \\"NC-17\\" | null;
-      };"
+      }"
     `);
   });
 
@@ -596,7 +596,7 @@ describe("createTypeGenerator", () => {
         FROM film
       `)
     ).toMatchInlineSnapshot(
-      `"{ a: Array<number>; b: Array<boolean>; c: Array<string> | null };"`
+      `"{ a: Array<number>; b: Array<boolean>; c: Array<string> | null }"`
     );
   });
 
@@ -610,7 +610,7 @@ describe("createTypeGenerator", () => {
         FROM film
       `)
     ).toMatchInlineSnapshot(
-      `"{ a: string | null; b: Array<string> | null; c: Array<string> | null };"`
+      `"{ a: string | null; b: Array<string> | null; c: Array<string> | null }"`
     );
   });
 });
