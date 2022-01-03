@@ -38,8 +38,8 @@ import { format as prettierFormat, Options as PrettierOptions } from "prettier";
 import {
   Column,
   Context,
-  GenerateOptions,
-  GeneratePayload,
+  CreateTypeGeneratorOptions,
+  TypeGenerator,
   ParsedExpression,
   ParsedResultTarget,
   ParsedTable,
@@ -114,7 +114,7 @@ const parseAExpr = (
       const lexpr =
         expression.lexpr && parseExpression(expression.lexpr, context);
       const rexpr =
-        expression.lexpr && parseExpression(expression.lexpr, context);
+        expression.rexpr && parseExpression(expression.rexpr, context);
 
       switch (name) {
         case "+": {
@@ -1433,11 +1433,11 @@ const parseRawStmt = (
   return parseStmt(stmt, context);
 };
 
-const parseQuery = async (
+const parseQuery = (
   query: string,
   context: Context,
   prettierOptions?: PrettierOptions
-): Promise<{ results: string[] } | { error: unknown }> => {
+): { results: string[] } | { error: unknown } => {
   try {
     const rawStmts = parse(query) as RawStmt[];
 
@@ -1683,15 +1683,14 @@ const getTypeMapper = async (
   };
 };
 
-export const generate = async ({
+export const createTypeGenerator = async ({
   connectionString,
   defaultSchema = "public",
   fallbackType = "string",
   formatFunc = (name, tsType) => `"${name}": ${tsType},`,
   prettierOptions,
-  queriesByKey,
   typeMap = {},
-}: GenerateOptions): Promise<GeneratePayload> => {
+}: CreateTypeGeneratorOptions): Promise<TypeGenerator> => {
   const pool = new Pool({
     connectionString,
   });
@@ -1718,15 +1717,9 @@ export const generate = async ({
     tablesBySchema,
   };
 
-  const payload: GeneratePayload = {};
-
-  for (const key of Object.keys(queriesByKey)) {
-    payload[key] = await parseQuery(
-      queriesByKey[key],
-      context,
-      prettierOptions
-    );
-  }
-
-  return payload;
+  return {
+    generate: (query) => {
+      return parseQuery(query, context, prettierOptions);
+    },
+  };
 };

@@ -55,9 +55,11 @@ console.log(query.results[0]);
 ## API
 
 ````typescript
-async function generate(options: GenerateOptions): Promise<GeneratePayload>;
+async function generate(
+  options: CreateTypeGeneratorOptions
+): Promise<TypeGenerator>;
 
-type GenerateOptions = {
+type CreateTypeGeneratorOptions = {
   /**
    * The connection string used to connect to your PostgreSQL backend. For format, see:
    * https://www.postgresql.org/docs/current/libpq-connect.html#id-1.7.3.8.3.6
@@ -101,10 +103,7 @@ type GenerateOptions = {
   typeMap?: Record<string, string>;
 };
 
-type GeneratePayload = Record<
-  string,
-  { results: string[] } | { error: unknown }
->;
+type TypeGenerator = Record<string, { results: string[] } | { error: unknown }>;
 ````
 
 ## Roadmap

@@ -58,7 +58,7 @@ export type ParsedTable = {
   nullable: boolean;
 };
 
-export type GenerateOptions = {
+export type CreateTypeGeneratorOptions = {
   /**
    * The connection string used to connect to your PostgreSQL backend. For format, see:
    * https://www.postgresql.org/docs/current/libpq-connect.html#id-1.7.3.8.3.6
@@ -89,11 +89,6 @@ export type GenerateOptions = {
    */
   prettierOptions?: PrettierOptions;
   /**
-   * A list of queries to generate types for, mapped to arbitrary keys. Typically, the keys will map
-   * to filenames or locations inside of files.
-   */
-  queriesByKey: Record<string, string>;
-  /**
    * Additional map of PostgreSQL to TypeScript types. This can be used to either provide type
    * information for custom types or override the default mapping for built-in types.
    * For example, if `bigint` values are parsed as strings, we would provide `{ int8: "string" }` as
@@ -102,7 +97,6 @@ export type GenerateOptions = {
   typeMap?: Record<string, string>;
 };
 
-export type GeneratePayload = Record<
-  string,
-  { results: string[] } | { error: unknown }
->;
+export type TypeGenerator = {
+  generate: (query: string) => { results: string[] } | { error: unknown };
+};

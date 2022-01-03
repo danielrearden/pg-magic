@@ -1,10 +1,11 @@
-import { generate } from "../lib";
+import { createTypeGenerator } from "../lib";
 
 const generateOne = async (source: string) => {
-  const { query } = await generate({
+  const typeGenerator = await createTypeGenerator({
     connectionString: process.env.POSTGRES_DSN || "",
-    queriesByKey: { query: source },
   });
+
+  const query = typeGenerator.generate(source);
 
   if ("error" in query) {
     throw query.error;
@@ -13,7 +14,7 @@ const generateOne = async (source: string) => {
   return query.results[0];
 };
 
-describe("generate", () => {
+describe("createTypeGenerator", () => {
   beforeAll(async () => {
     if (!process.env.POSTGRES_DSN) {
       throw new Error(
