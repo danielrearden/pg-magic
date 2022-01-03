@@ -31,17 +31,18 @@ yarn add pg-magic
 ## Basic Usage
 
 ```typescript
-const { query } = await generate({
-  queriesByKey: {
-    query: `
-      SELECT
-        id,
-        first_name || last_name "fullName",
-        email
-      FROM customer;
-    `,
-  },
+const generator = await createTypeGenerator({
+  connectionString: "postgresql://localhost:5432/postgres",
 });
+
+const query = generator.generate(`
+  SELECT
+    id,
+    first_name || last_name "fullName",
+    email
+  FROM customer;
+`);
+
 if ("error" in query) {
   throw query.error;
 }
@@ -55,7 +56,7 @@ console.log(query.results[0]);
 ## API
 
 ````typescript
-async function generate(
+async function createTypeGenerator(
   options: CreateTypeGeneratorOptions
 ): Promise<TypeGenerator>;
 
@@ -103,7 +104,9 @@ type CreateTypeGeneratorOptions = {
   typeMap?: Record<string, string>;
 };
 
-type TypeGenerator = Record<string, { results: string[] } | { error: unknown }>;
+type TypeGenerator = {
+  generate: () => { results: string[] } | { error: unknown }>
+};
 ````
 
 ## Roadmap
