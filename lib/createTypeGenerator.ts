@@ -1576,21 +1576,25 @@ export const getTablesBySchema = async (
       tablesBySchema[schema] = {};
     }
 
-    const resultTargets = parseRawStmt(parse(definition)[0], {
-      ...context,
-      tablesBySchema,
-    });
-    tablesBySchema[schema][name] = {
-      columns: resultTargets.reduce((acc, resultTarget) => {
-        acc[resultTarget.name] = {
-          nullable: resultTarget.nullable,
-          type: resultTarget.type,
-        };
+    try {
+      const resultTargets = parseRawStmt(parse(definition)[0], {
+        ...context,
+        tablesBySchema,
+      });
+      tablesBySchema[schema][name] = {
+        columns: resultTargets.reduce((acc, resultTarget) => {
+          acc[resultTarget.name] = {
+            nullable: resultTarget.nullable,
+            type: resultTarget.type,
+          };
 
-        return acc;
-      }, {} as Record<string, Column>),
-      nullable: false,
-    };
+          return acc;
+        }, {} as Record<string, Column>),
+        nullable: false,
+      };
+    } catch (error) {
+      // If we can't parse the view definition, just skip it
+    }
   }
 
   // Ensure the map for the default schema exists since this is where we write CTEs to
